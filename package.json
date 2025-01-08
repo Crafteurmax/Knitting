@@ -1,0 +1,25 @@
+{
+  "name": "com.crafteurmax.knitting",
+  "version": "1.0.0",
+  "displayName": "Knitting",
+  "description": "This package provide a parser for twine projets in the Entweedle format",
+  "unity": "2022.3",
+  "unityRelease": "45f1",
+  "documentationUrl": "",
+  "changelogUrl": "",
+  "licensesUrl": "",
+  "dependencies": {
+  },
+  "keywords": [
+    "twine",
+    "parsing",
+    "dialogue",
+    "visual novel"
+  ],
+  "author": {
+    "name": "Crafteurmax",
+    "email": "ctafteurmax@gmail.com",
+    "url": "https://itch.io/Crafteurmax"
+  },
+  "testables": [ "com.crafteurmax.knitting" ]
+}

@@ -1,0 +1,96 @@
+:: StoryTitle
+Testing Story
+
+
+:: StoryData
+{
+  "ifid": "66DECB09-30F9-4695-BF93-DDD630A721F9",
+  "format": "Entweedle",
+  "format-version": "1.1.1",
+  "start": "Start",
+  "zoom": "1",
+  "tag-colors": {
+    "START": "green",
+    "PNJ": "blue",
+    "VOYANTE": "red"
+  }
+}
+
+
+:: Alex_4 [PNJ QUESTION NEWWEEK] {"position":"850,775","size":"100,100"}
+(set: $S1 to '')
+Comment trouver un sens à ma vie ?
+
+[Faites glisser une carte de votre choix]
+
+[[La Papesse->S1HighPriestess]]
+[[Le Chariot->S1Chariot]]
+[[L'Hermite->S1Hermit]]
+[[La Mort->S1Death]]
+
+
+:: Alex_5a [PNJ SOUND] {"position":"700,1050","size":"100,100"}
+(sound: 'Alex_enthousiaste)
+Vous avez raison. Je dois me reprendre en main. Je sais ce qu’il me reste à faire !
+[[TransitionA1]]
+
+
+:: Alex_5b [PNJ SOUND] {"position":"1000,1050","size":"100,100"}
+(sound: 'Alex_dubitatif')
+Je… Je ne suis pas certain.e de comprendre ce que vous voulez dire. Je vais y réfléchir…
+[[TransitionA1]]
+
+
+:: Cassandre_0 [PNJ NEWCLIENT SOUND] {"position":"850,1225","size":"100,100"}
+(sound: 'Cassandre_confiante')
+Cassandre ! Scorpion ! A Positif !
+Je sais de source sûre que ta sorcellerie n'est que poudre aux yeux.
+[[Cassandre_1]]
+
+
+:: Cassandre_1 [PNJ] {"position":"850,1350","size":"100,100"}
+(if: $S1 is 'death')[Pourtant le·a dernier·e qui a osé te consulter se trouve aujourd’hui six pieds sous terre.]
+(else-if: $S1 is 'highpriestess')[Pourtant tes tours ont fait renaître la foi de brebis qui étaient jusqu’alors égarées.]
+(else-if: $S1 is 'hermit')[Pourtant tes tours ont fait renaître la foi de brebis qui étaient jusqu’alors égarées.]
+(else-if: $S1 is 'chariot')[Pourtant le·a dernier·e à t'avoir consulté a eu l'audace de lancer un mouvement social coriace.]
+[[TransitionEND]]
+
+
+:: S1Chariot [VOYANTE] {"position":"775,900","size":"100,100"}
+(set: $S1 to 'chariot')
+Il est temps de prendre le contrôle de votre destin, le triomphe est à la clef.
+[[Alex_5a]]
+
+
+:: S1Death [VOYANTE] {"position":"625,900","size":"100,100"}
+(set: $S1 to 'death')
+N’ayez plus peur de lâcher prise, votre destin sera source de renouveau.
+[[Alex_5a]]
+
+
+:: S1Hermit [VOYANTE] {"position":"1075,900","size":"100,100"}
+(set: $S1 to 'hermit')
+Cherchez en vous la sagesse qui vous guidera.
+[[Alex_5b]]
+
+
+:: S1HighPriestess [VOYANTE] {"position":"925,900","size":"100,100"}
+(set: $S1 to 'highpriestess')
+C'est dans votre sagesse intérieure que votre spiritualité se révélera.
+[[Alex_5b]]
+
+
+:: Start [START DESCRIPTION] {"position":"850,625","size":"100,100"}
+Vous vous réveillez d’un long sommeil, tandis que des mains inconnues s’activent à vous remettre en marche. Après un long reboot de votre système, vous percevez des bribes d’un futur incertain.
+
+[Appuyer Sur Espace ou Clic Gauche]
+[[Alex_4]]
+
+
+:: TransitionA1 [FADE] {"position":"850,1100","size":"100,100"}
+*Transition au noir*
+[[Cassandre_0]]
+
+
+:: TransitionEND [END] {"position":"850,1500","size":"100,100"}
+END
