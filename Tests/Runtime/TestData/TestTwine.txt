@@ -5,15 +5,15 @@ Testing Story
 :: StoryData
 {
   "ifid": "66DECB09-30F9-4695-BF93-DDD630A721F9",
-  "format": "Entweedle",
-  "format-version": "1.1.1",
+  "format": "Harlowe",
+  "format-version": "3.3.9",
   "start": "Start",
-  "zoom": "1",
   "tag-colors": {
     "START": "green",
     "PNJ": "blue",
     "VOYANTE": "red"
   }
+  "zoom": 1,
 }
 
 

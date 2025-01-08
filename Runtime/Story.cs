@@ -83,26 +83,29 @@ public class Story : MonoBehaviour
 
     private void ParseStoryData(string data)
     {
-        Regex RGX_parseData = new Regex(@"'ifid': '(?<ifid>[^']*)(.|\n)*'format': '(?<format>[^']*)(.|\n)*'format-version': '(?<formatVersion>\d*\.\d*\.\d*)(.|\n)*'start': '(?<start>[^']*)(.|\n)*'zoom': '(?<zoom>\d+)(.|\n)*'tag-colors': {(?<tagsColors>[^}]*)".Replace('\'','\"'));
+        Regex RGX_parseData = new Regex(@"""ifid"": ""(?<ifid>[^""]*)(.|\n)*""format"": ""(?<format>[^""]*)(.|\n)*""format-version"": ""(?<formatVersion>\d*\.\d*\.\d*)(.|\n)*""start"": ""(?<start>[^""]*)(.|\n)*""tag-colors"": {(?<tagsColors>[^}]*)(.|\n)*""zoom"": ""?(?<zoom>\d+)".Replace('\'','\"'));
         
         Match match = RGX_parseData.Match(data);
-        Assert.IsTrue(match.Success, data + "\n" + RGX_parseData.ToString());
 
-        ifid = match.Groups["ifid"].Value;
-        format = match.Groups["format"].Value;
-        formatVersion = match.Groups["formatVersion"].Value;
-        start = match.Groups["start"].Value;
-        zoom = int.Parse(match.Groups["zoom"].Value);
-
-        Regex RGX_parseColor = new Regex(@"[^""]*""(?<tag>[^""]*)"": ""(?<color>[^""]*)""");
-
-        MatchCollection pairs = RGX_parseColor.Matches(match.Groups["tagsColors"].Value);
-        foreach (Match colorMatch in pairs)
+        if (match.Success)
         {
-            string tag = colorMatch.Groups["tag"].Value;
-            Color color = possibleColors[colorMatch.Groups["color"].Value];
-            tagColors.Add(tag, color);
+            ifid = match.Groups["ifid"].Value;
+            format = match.Groups["format"].Value;
+            formatVersion = match.Groups["formatVersion"].Value;
+            start = match.Groups["start"].Value;
+            zoom = int.Parse(match.Groups["zoom"].Value);
+
+            Regex RGX_parseColor = new Regex(@"[^""]*""(?<tag>[^""]*)"": ""(?<color>[^""]*)""");
+
+            MatchCollection pairs = RGX_parseColor.Matches(match.Groups["tagsColors"].Value);
+            foreach (Match colorMatch in pairs)
+            {
+                string tag = colorMatch.Groups["tag"].Value;
+                Color color = possibleColors[colorMatch.Groups["color"].Value];
+                tagColors.Add(tag, color);
+            }
         }
+        else Debug.LogWarning("StoryData have been parsed incorrectly, some data could be missing");
     }
 
     private void SetupPossiblesColors()

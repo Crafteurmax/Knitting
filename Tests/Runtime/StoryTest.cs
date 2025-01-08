@@ -29,8 +29,8 @@ public class StoryTest
         Debug.Log("==========\nStoryTestSetUpData\n==========");
         Assert.AreEqual("Testing Story", story.GetTitle());
         Assert.AreEqual("66DECB09-30F9-4695-BF93-DDD630A721F9", story.GetIfid());
-        Assert.AreEqual("Entweedle", story.GetFormat());
-        Assert.AreEqual("1.1.1", story.GetFormatVersion());
+        Assert.AreEqual("Harlowe", story.GetFormat());
+        Assert.AreEqual("3.3.9", story.GetFormatVersion());
         Assert.AreEqual("Start", story.GetStart());
         Assert.AreEqual(1, story.GetZoom());
 
