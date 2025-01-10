@@ -2,7 +2,7 @@
 
 ## Description
 
-Knitting is a simply to use dataparsing package to convert a Twine project into a usable unity gameObject. It use the Harlowe story format wich mean that you can use macros, hooks, variable and all of this good stuff. I'm not sure but I think that it will also parse the Entweedle format.
+Knitting is a simply to use dataparsing package to convert a [Twine](https://twinery.org/) project into a usable unity gameObject. It use the Harlowe story format wich mean that you can use macros, hooks, variable and all of this good stuff. I'm not sure but I think that it will also parse the Entweedle format.
 
 ## Limitation
 
@@ -102,7 +102,7 @@ Debug.log("the name of the player is " + story.GetVariable("playerName"));
 ##### NextNode
 
 Description :
-Will change the current node to the default next node (aka, the first link in your node text). Very usefull whe you only have one only option for your next node, if you have multiple of them please use the [ChooseNextNode](##### ChooseNextNode) methode.
+Will change the current node to the default next node (aka, the first link in your node text). Very usefull whe you only have one only option for your next node, if you have multiple of them please use the ChooseNextNode methode.
 
 ```C#
 void NextNode()
@@ -112,7 +112,7 @@ void NextNode()
 ##### ChooseNextNode
 
 Description :
-Will change the current node to the choosen destination (the top one beeing at the index 0). Very usefull whe you only have multiple options for your nexts nodes, if you have only one of them please use the [NextNode](##### NextNode) methode.
+Will change the current node to the choosen destination (the top one beeing at the index 0). Very usefull whe you only have multiple options for your nexts nodes, if you have only one of them please use the NextNode methode.
 
 ```C#
  void ChooseNextNode(int index)
