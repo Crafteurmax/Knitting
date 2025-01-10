@@ -111,6 +111,7 @@ public class StoryNode
         output += "Position : " + position;
         output += "\nSize : " + size;
 
+        Debug.Log(output);
     }
 
     override public string ToString() { return title; }
