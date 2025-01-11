@@ -122,6 +122,19 @@ Arguments:
 
 - int index : the index of the choosen next node
 
+##### SetNextNode
+
+Description :
+Will change the current node to the node described by the title.
+
+```C#
+ void SetNextNode(string title)
+```
+
+Arguments:
+
+- string title : the title of next node
+
 ##### GetCurrentNode
 
 Description :

@@ -139,14 +139,20 @@ public class Story : MonoBehaviour
     public void NextNode()
     {
         List<NextNode> nextNodes = currentNode.GetNextNodes();
-        currentNode = nodes[nextNodes[0].title];
+        SetNextNode(nextNodes[0].title);
     }
 
     public void ChooseNextNode(int index)
     {
         List<NextNode> nextNodes = currentNode.GetNextNodes();
         Assert.IsTrue(index < nextNodes.Count, "Index out of range");
-        currentNode = nodes[nextNodes[index].title];
+        SetNextNode(nextNodes[index].title);
+    }
+
+    public void SetNextNode(string title)
+    {
+        Assert.IsTrue(nodes.TryGetValue(title, out StoryNode next), title + " doesn't existe");
+        currentNode = next;
     }
 
     // ########## GETTER / SETTER ########## 
