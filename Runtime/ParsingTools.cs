@@ -48,9 +48,9 @@ public static class ParsingTools
 
         for (int i = offset; i < text.Length; i++)
         {
+            if (!isInApostrophe && !isInGuillemet && text[i] == separator) return i;
             if (!skipnext && !isInGuillemet && text[i] == '\'') isInApostrophe = !isInApostrophe;
             if (!skipnext && !isInApostrophe && text[i] == '"') isInGuillemet = !isInGuillemet;
-            if (!isInApostrophe && !isInGuillemet && text[i] == separator) return i;
         }
 
         return -1;
@@ -156,4 +156,63 @@ public static class ParsingTools
 
         return result ;
     }
+
+    static public ParsingResult GetSet(string text, int offset = 0) 
+    {
+        ParsingResult result = new ParsingResult();
+
+        int variableNameStart = -1;
+        int variableNameEnd = -1;
+
+        for (int i = offset; i < text.Length; i++) 
+        {
+            if (text[i] == '$' && variableNameStart == -1) variableNameStart = i + 1;
+            else if (text[i] == ' ' && variableNameStart != -1 && variableNameEnd == -1) variableNameEnd = i;
+            else if (variableNameEnd != -1) break;
+        }
+
+        if (variableNameStart == -1 || variableNameEnd == -1) return result ;
+        Debug.Log("step one");
+
+        result.Groups.Add("variableName", text.Substring(variableNameStart, variableNameEnd - variableNameStart));
+
+        ParsingResult value = GetWord(text,variableNameEnd);
+        if (!value.succes) return result ;
+        Debug.Log("step two");
+
+        result.Groups.Add("value", value.Groups["Inside"]);
+
+        result.Value = text;
+        result.succes = true ;
+        result.startIndex = 0;
+        result.endIndex = text.Length;
+
+        return result;
+    }
+
+    static public ParsingResult GetWord(string text, int offset = 0)
+    {
+        ParsingResult valueGuillemet = GetBetween(text, '"', '"', offset);
+        ParsingResult valueApostrophe = GetBetween(text, '\'', '\'', offset);
+
+        return valueGuillemet.succes ? valueGuillemet : valueApostrophe;
+    }
+
+
+    static public List<ParsingResult> GetAllWords(string text, int offset = 0)
+    {
+        List<ParsingResult> result = new List<ParsingResult>();
+
+        ParsingResult match = GetWord(text, offset);
+
+        while (match.succes)
+        {
+            result.Add(match);
+            match = GetWord(text, match.endIndex + 1);
+        }
+
+        return result;
+
+    }
+
 }

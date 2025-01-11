@@ -180,10 +180,13 @@ public class StoryNode
                 switch (commandType)
                 {
                     case COMMAND_TYPE.SET:
-                        Regex patternExtractSetVariable = new Regex(@"set: \$(?<variableName>.*) to \'(?<value>.*)'");
-                        Match variableMatch = patternExtractSetVariable.Match(match.Groups["commande"]);
+                        // Regex patternExtractSetVariable = new Regex(@"set: \$(?<variableName>.*) to ('|"")(?<value>.*)('|"")");
+                        ParsingResult variableMatch = ParsingTools.GetSet(match.Groups["commande"]);
+                        Assert.IsTrue(variableMatch.succes);
 
-                        parentStrory.SetVariable(variableMatch.Groups["variableName"].Value, variableMatch.Groups["value"].Value);
+                        Debug.Log("[" + variableMatch.Groups["variableName"] + "]");
+
+                        parentStrory.SetVariable(variableMatch.Groups["variableName"], variableMatch.Groups["value"]);
                         break;
                     case COMMAND_TYPE.IF:
                         isConditionAlreadyValide = false;
@@ -217,10 +220,10 @@ public class StoryNode
                         break;
                     case COMMAND_TYPE.EITHER:
                         string formatedText = ReplaceVariablesByValues(match.Groups["commande"], "");
-                        Regex RGX_ExtractChoices = new Regex(@"'(?<choice>[^']*)'");
+                        // Regex RGX_ExtractChoices = new Regex(@"'(?<choice>[^']*)'");
 
-                        MatchCollection matches = RGX_ExtractChoices.Matches(formatedText);
-                        parsedText += matches[Random.Range(0, matches.Count)].Groups["choice"].Value;
+                        List<ParsingResult> matches = ParsingTools.GetAllWords(formatedText);
+                        parsedText += matches[Random.Range(0, matches.Count)].Groups["Inside"];
 
                         break;
                     case COMMAND_TYPE.COND:
@@ -297,7 +300,7 @@ public class StoryNode
         condition = ReplaceVariablesByValues(condition, "'");
 
         // evaluate
-        Regex RGX_extractValues = new Regex(@"(('(?<leftValue>[^']*?)' *(?<operator>[^'\n]*?) *'(?<rightValue>[^']*?)')|'(true|false)'|not *'(?<uniqueValue>[^']*?)')");
+        Regex RGX_extractValues = new Regex(@"((('|"")(?<leftValue>[^'""]*?)('|"") *(?<operator>[^'""\n]*?) *('|"")(?<rightValue>[^'""]*?)('|""))|('|"")(true|false)('|"")|not *('|"")(?<uniqueValue>[^'""]*?)('|""))");
         Match match = RGX_extractValues.Match(condition);
 
         Assert.IsTrue(match.Success, "syntaxe error in condition : " + condition);

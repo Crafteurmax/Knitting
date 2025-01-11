@@ -123,7 +123,7 @@ public class NodeTest
         Debug.Log("==========\nNodeTestSetVariable\n==========");
 
         string componentTitle = "Cassandre_6 {\"position\":\"850,5350\",\"size\":\"100,100\"}";
-        string componentData = "(set: $Variable to 'ThisIsAVariableValue')\n";
+        string componentData = "(set: $Variable to \"ThisIsAVariableValue\")\n";
 
         StoryNode nodeA = new StoryNode(componentTitle, componentData, story);
         nodeA.getText();
@@ -146,7 +146,7 @@ public class NodeTest
 
 
         string componentTitleB = "Cassandre_6 {\"position\":\"850,5350\",\"size\":\"100,100\"}";
-        string componentDataB = "(if: $Variable is 'ThisIsAVariableValue')[Vous aviez raison, la Nouvelle Lune n’est que mensonge. Ma vie n’a cessé de s’améliorer depuis que je l’ai quittée.]\n" +
+        string componentDataB = "(if: $Variable is \"ThisIsAVariableValue\")[Vous aviez raison, la Nouvelle Lune n’est que mensonge. Ma vie n’a cessé de s’améliorer depuis que je l’ai quittée.]\n" +
                                 "(else-if: $Variable is 'ThisIsAnOtherVariableValue')[La vache... CETTE vache !! Elle est en train de tout me prendre ! Mon poste, mon parti, tous mes électeurs...]\n" +
                                 "(else:)[La Nouvelle Lune m’a guidée dans l’ascension au sein de l’ordre. Je n’aurai jamais pu espérer une évolution plus fulgurante.]";
         StoryNode nodeB = new StoryNode(componentTitleB, componentDataB, story);
@@ -187,7 +187,7 @@ public class NodeTest
 
 
         string componentTitleA = "Cassandre_6 {\"position\":\"850,5350\",\"size\":\"100,100\"}";
-        string componentDataA = "(set: $Variable to '')\n";
+        string componentDataA = "(set: $Variable to \"\")\n";
         StoryNode nodeA = new StoryNode(componentTitleA, componentDataA, story);
 
         string componentTitleB = "Cassandre_6 {\"position\":\"850,5350\",\"size\":\"100,100\"}";
@@ -216,7 +216,7 @@ public class NodeTest
 
 
         string componentTitle = "Cassandre_6 {\"position\":\"850,5350\",\"size\":\"100,100\"}";
-        string componentData = "this test is (either: 'good', 'bad', 'ug,ly').";
+        string componentData = "this test is (either: \"good\", 'bad', 'ug,ly').";
         StoryNode node = new StoryNode(componentTitle, componentData, story);
 
         int[] count = {0,0,0};
