@@ -172,13 +172,11 @@ public static class ParsingTools
         }
 
         if (variableNameStart == -1 || variableNameEnd == -1) return result ;
-        Debug.Log("step one");
 
         result.Groups.Add("variableName", text.Substring(variableNameStart, variableNameEnd - variableNameStart));
 
         ParsingResult value = GetWord(text,variableNameEnd);
         if (!value.succes) return result ;
-        Debug.Log("step two");
 
         result.Groups.Add("value", value.Groups["Inside"]);
 

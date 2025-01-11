@@ -184,7 +184,7 @@ public class StoryNode
                         ParsingResult variableMatch = ParsingTools.GetSet(match.Groups["commande"]);
                         Assert.IsTrue(variableMatch.succes);
 
-                        Debug.Log("[" + variableMatch.Groups["variableName"] + "]");
+                        // Debug.Log("[" + variableMatch.Groups["variableName"] + "]");
 
                         parentStrory.SetVariable(variableMatch.Groups["variableName"], variableMatch.Groups["value"]);
                         break;
