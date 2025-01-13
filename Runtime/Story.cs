@@ -30,6 +30,16 @@ public class Story : MonoBehaviour
     // Customisation
     private Dictionary<string, Color> possibleColors = new Dictionary<string, Color>();
 
+    [System.Serializable]
+    public class DescribedSprite
+    {
+        public string title;
+        public Sprite sprite;
+    }
+
+    [SerializeField] private List<DescribedSprite> sprites = new List<DescribedSprite>();
+
+
     // Debug 
     // public int index;
 
@@ -172,6 +182,12 @@ public class Story : MonoBehaviour
     public Dictionary<string, Color> GetTagColors() { return tagColors; }
 
     public StoryNode GetCurrentNode() { return currentNode; }
+
+    public Sprite getSprite(string title)
+    {
+        foreach(DescribedSprite sprite in sprites) if (sprite.title == title) return sprite.sprite;
+        return null;
+    }
 
     // ########## Debug ########## 
     /*

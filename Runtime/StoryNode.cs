@@ -34,6 +34,8 @@ public class StoryNode
 
     private Story parentStrory;
 
+    private Sprite sprite = null;
+
     public StoryNode(string _title, string _data, Story _parentStrory)
     {
         Assert.IsNotNull(_parentStrory);
@@ -147,6 +149,7 @@ public class StoryNode
         COND,
         NTH,
         PRINT,
+        IMAGE,
         DEFAULT
     }
 
@@ -267,6 +270,10 @@ public class StoryNode
                         argument = argument.Trim();
                         parsedText += ReplaceVariablesByValues(argument, "");
                         break;
+                    case COMMAND_TYPE.IMAGE:
+                        string imageName = ParsingTools.GetWord(match.Groups["commande"],6).Groups["Inside"];
+                        sprite = parentStrory.getSprite(imageName); 
+                        break;
                     case COMMAND_TYPE.DEFAULT:
                         // Debug.Log("false positve");
                         parsedText += ReplaceVariablesByValues(match.Value, "");
@@ -291,6 +298,7 @@ public class StoryNode
         if (command.StartsWith("cond:")) return COMMAND_TYPE.COND;
         if (command.StartsWith("nth:")) return COMMAND_TYPE.NTH;
         if (command.StartsWith("print:")) return COMMAND_TYPE.PRINT;
+        if (command.StartsWith("image:")) return COMMAND_TYPE.IMAGE;
         return COMMAND_TYPE.DEFAULT;
     }
 
@@ -413,5 +421,7 @@ public class StoryNode
     public override int GetHashCode() { return HashCode.Combine(title, tags, position, size); }
 
     public bool HasTag(string tag) { return tags.Contains(tag); }
+
+    public Sprite GetSprite() { return sprite; }
 
 }
