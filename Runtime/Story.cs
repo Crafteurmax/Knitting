@@ -161,7 +161,8 @@ public class Story : MonoBehaviour
 
     public void SetNextNode(string title)
     {
-        Assert.IsTrue(nodes.TryGetValue(title, out StoryNode next), title + " doesn't existe");
+        StoryNode next = null;
+        Assert.IsTrue(nodes.TryGetValue(title, out next), title + " doesn't existe");
         currentNode = next;
     }
 

@@ -1,9 +1,5 @@
-using Codice.Client.BaseCommands;
-using Codice.Client.Common.TreeGrouper;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -256,7 +252,8 @@ public class StoryNode
 
                         List<string> splitedArguments2 = ParsingTools.CarefullSplit(ReplaceVariablesByValues(arguments2, ""),',');
 
-                        Assert.IsTrue(int.TryParse(splitedArguments2[0], out int nth), splitedArguments2[0] + " is not a number");
+                        int nth = 0;
+                        Assert.IsTrue(int.TryParse(splitedArguments2[0], out nth), splitedArguments2[0] + " is not a number");
 
                         // Debug.Log("splitedArguments2.Count : " + splitedArguments2.Count);
                         nth = (nth - 1) % (splitedArguments2.Count - 1) + 1;

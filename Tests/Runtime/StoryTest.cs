@@ -53,9 +53,12 @@ public class StoryTest
         Assert.AreEqual("Alex_4", story.GetCurrentNode().GetTitle());
         story.ChooseNextNode(2);
         Assert.AreEqual("S1Hermit", story.GetCurrentNode().GetTitle());
+        story.SetNextNode("Start");
+        Assert.AreEqual("Start", story.GetCurrentNode().GetTitle());
 
         Debug.Log("====================");
     }
+
 
     /*
     // A UnityTest behaves like a coroutine in Play Mode. In Edit Mode you can use
