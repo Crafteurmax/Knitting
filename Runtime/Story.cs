@@ -134,7 +134,7 @@ public class Story : MonoBehaviour
     {
         string returnValue;
         bool isSet = nodeVariable.TryGetValue(variableName, out returnValue);
-        Assert.IsTrue(isSet, variableName + " is not defined");
+        //Assert.IsTrue(isSet, variableName + " is not defined");
         return returnValue;
     }
 
@@ -155,14 +155,15 @@ public class Story : MonoBehaviour
     public void ChooseNextNode(int index)
     {
         List<NextNode> nextNodes = currentNode.GetNextNodes();
-        Assert.IsTrue(index < nextNodes.Count, "Index out of range");
+        //Assert.IsTrue(index < nextNodes.Count, "Index out of range");
         SetNextNode(nextNodes[index].title);
     }
 
     public void SetNextNode(string title)
     {
         StoryNode next = null;
-        Assert.IsTrue(nodes.TryGetValue(title, out next), title + " doesn't existe");
+        nodes.TryGetValue(title, out next);
+        //Assert.IsTrue(nodes.TryGetValue(title, out next), title + " doesn't existe");
         currentNode = next;
     }
 

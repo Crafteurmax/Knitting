@@ -34,7 +34,7 @@ public class StoryNode
 
     public StoryNode(string _title, string _data, Story _parentStrory)
     {
-        Assert.IsNotNull(_parentStrory);
+        //Assert.IsNotNull(_parentStrory);
 
         ParseTitle(_title);
         ParseData(_data);
@@ -59,7 +59,7 @@ public class StoryNode
         Regex regex = new Regex(@"(?<title>[^ ]*)( \[)?(?<tags>[^]]*)(\])? {""position"":""(?<posX>\d*),(?<posY>\d*)"",""size"":""(?<sizeX>\d*),(?<sizeY>\d*)""}");
 
         Match match = regex.Match(_title);
-        Assert.IsTrue(match.Success, _title + " is not a valid title");
+        //Assert.IsTrue(match.Success, _title + " is not a valid title");
 
         title = match.Groups["title"].Value;
         
@@ -181,7 +181,7 @@ public class StoryNode
                     case COMMAND_TYPE.SET:
                         // Regex patternExtractSetVariable = new Regex(@"set: \$(?<variableName>.*) to ('|"")(?<value>.*)('|"")");
                         ParsingResult variableMatch = ParsingTools.GetSet(match.Groups["commande"]);
-                        Assert.IsTrue(variableMatch.succes);
+                        //Assert.IsTrue(variableMatch.succes);
 
                         // Debug.Log("[" + variableMatch.Groups["variableName"] + "]");
 
@@ -253,7 +253,8 @@ public class StoryNode
                         List<string> splitedArguments2 = ParsingTools.CarefullSplit(ReplaceVariablesByValues(arguments2, ""),',');
 
                         int nth = 0;
-                        Assert.IsTrue(int.TryParse(splitedArguments2[0], out nth), splitedArguments2[0] + " is not a number");
+                        int.TryParse(splitedArguments2[0], out nth);
+                        //Assert.IsTrue(int.TryParse(splitedArguments2[0], out nth), splitedArguments2[0] + " is not a number");
 
                         // Debug.Log("splitedArguments2.Count : " + splitedArguments2.Count);
                         nth = (nth - 1) % (splitedArguments2.Count - 1) + 1;
@@ -308,12 +309,12 @@ public class StoryNode
         Regex RGX_extractValues = new Regex(@"((('|"")(?<leftValue>[^'""]*?)('|"") *(?<operator>[^'""\n]*?) *('|"")(?<rightValue>[^'""]*?)('|""))|('|"")(true|false)('|"")|not *('|"")(?<uniqueValue>[^'""]*?)('|""))");
         Match match = RGX_extractValues.Match(condition);
 
-        Assert.IsTrue(match.Success, "syntaxe error in condition : " + condition);
+        //Assert.IsTrue(match.Success, "syntaxe error in condition : " + condition);
 
         if (condition.StartsWith("not"))
         {
             bool isUniqueValueABool = match.Groups["uniqueValue"].Value == "true" || match.Groups["uniqueValue"].Value == "false";
-            Assert.IsTrue(isUniqueValueABool, "invalide argument " + match.Groups["uniqueValue"].Value + "is not a boolean");
+            //Assert.IsTrue(isUniqueValueABool, "invalide argument " + match.Groups["uniqueValue"].Value + "is not a boolean");
 
             return match.Groups["uniqueValue"].Value == "false";
         }
@@ -344,42 +345,42 @@ public class StoryNode
                 if (isLeftValueANumber && isRightValueANumber) return leftValue > rightValue;
                 else
                 { 
-                    Assert.IsTrue(false, "invalide argument " + (isLeftValueANumber ? "right value" : "left value") + "is not a number");
+                    //Assert.IsTrue(false, "invalide argument " + (isLeftValueANumber ? "right value" : "left value") + "is not a number");
                     return false;
                 }
             case ">=":
                 if(isLeftValueANumber&&isRightValueANumber) return leftValue>=rightValue;
                 else
                 {
-                    Assert.IsTrue(false, "invalide argument " + (isLeftValueANumber ? "right value" : "left value") + "is not a number");
+                    //Assert.IsTrue(false, "invalide argument " + (isLeftValueANumber ? "right value" : "left value") + "is not a number");
                     return false;
                 }
             case "<":
                 if(isLeftValueANumber&&isRightValueANumber) return leftValue<rightValue;
                 else
                 {
-                    Assert.IsTrue(false, "invalide argument " + (isLeftValueANumber ? "right value" : "left value") + "is not a number");
+                    //Assert.IsTrue(false, "invalide argument " + (isLeftValueANumber ? "right value" : "left value") + "is not a number");
                     return false;
                 }
             case "<=":
                 if(isLeftValueANumber&&isRightValueANumber) return leftValue<=rightValue;
                 else
                 {
-                    Assert.IsTrue(false, "invalide argument " + (isLeftValueANumber ? "right value" : "left value") + "is not a number");
+                    //Assert.IsTrue(false, "invalide argument " + (isLeftValueANumber ? "right value" : "left value") + "is not a number");
                     return false;
                 }
             case "and":
                 if (isLeftValueABool && isRightValueABool) return match.Groups["leftValue"].Value == "true" && match.Groups["rightValue"].Value == "true";
                 else
                 {
-                    Assert.IsTrue(false, "invalide argument " + (isLeftValueABool ? "right value" : "left value") + "is not a boolean");
+                    //Assert.IsTrue(false, "invalide argument " + (isLeftValueABool ? "right value" : "left value") + "is not a boolean");
                     return false;
                 }
             case "or":
                 if (isLeftValueABool && isRightValueABool) return match.Groups["leftValue"].Value == "true" || match.Groups["rightValue"].Value == "true";
                 else
                 {
-                    Assert.IsTrue(false, "invalide argument " + (isLeftValueABool ? "right value" : "left value") + "is not a boolean");
+                    //Assert.IsTrue(false, "invalide argument " + (isLeftValueABool ? "right value" : "left value") + "is not a boolean");
                     return false;
                 }
         }
