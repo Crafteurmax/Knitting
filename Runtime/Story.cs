@@ -37,6 +37,8 @@ public class Story : MonoBehaviour
         public Sprite sprite;
     }
 
+    [SerializeField] bool usePath;
+    [SerializeField] string path;
     [SerializeField] private List<DescribedSprite> sprites = new List<DescribedSprite>();
 
 
@@ -46,6 +48,11 @@ public class Story : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        if (usePath)
+        {
+            Debug.Log("vbhnj");
+            twineText = Resources.Load(path) as TextAsset;
+        }
         if (!twineText)
         {
             Debug.LogWarning("No twine file");

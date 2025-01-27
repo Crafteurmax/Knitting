@@ -1,4 +1,5 @@
 /toIgnore/
+toIgnore.meta
 /[Aa]ssets/AssetStoreTools*
 /[Aa]ssets/Plugins/Editor/JetBrains*
 
