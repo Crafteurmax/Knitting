@@ -48,11 +48,8 @@ public class Story : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        if (usePath)
-        {
-            Debug.Log("vbhnj");
-            twineText = Resources.Load(path) as TextAsset;
-        }
+        if (usePath) twineText = Resources.Load(path) as TextAsset;
+
         if (!twineText)
         {
             Debug.LogWarning("No twine file");
