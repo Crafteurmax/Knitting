@@ -44,6 +44,43 @@ public class StoryTest
         Debug.Log("====================");
     }
 
+
+    [Test]
+    public void StoryTestMinimalSetUpData()
+    {
+        Debug.Log("==========\nStoryTestMinimalSetUpData\n==========");
+
+
+        GameObject anOtherstoryHolder = new GameObject();
+        string storyData = ":: StoryTitle\n" +
+                            "test\n\n" +
+                            ":: StoryData\n" +
+                            "{\n" +
+                            "  \"ifid\": \"0E363725-924E-42D0-8E81-BC6DC1AB58C8\",\n" +
+                            "  \"format\": \"Harlowe\",\n" +
+                            "  \"format-version\": \"3.3.9\",\n" +
+                            "  \"start\": \"Passage sans titre\",\n" +
+                            "  \"zoom\": 0.3\n" +
+                            "}\n\n"+
+                            ":: Passage sans titre {\"position\":\"800,350\",\"size\":\"100,100\"}\n" +
+                            "~~//''exemple de texte''//~~";
+
+                Story otherStory = anOtherstoryHolder.AddComponent<Story>();
+        otherStory.SetUpStory(storyData);
+        Assert.AreEqual("test", otherStory.GetTitle());
+        Assert.AreEqual("0E363725-924E-42D0-8E81-BC6DC1AB58C8", otherStory.GetIfid());
+        Assert.AreEqual("Harlowe", otherStory.GetFormat());
+        Assert.AreEqual("3.3.9", otherStory.GetFormatVersion());
+        Assert.AreEqual("Passage sans titre", otherStory.GetStart());
+        Assert.AreEqual(0.3f, otherStory.GetZoom());
+
+        Dictionary<string, Color> goodColor = new Dictionary<string, Color>();
+
+        Assert.AreEqual(goodColor, otherStory.GetTagColors());
+
+        Debug.Log("====================");
+    }
+
     [Test]
     public void StoryTestNextNode()
     {

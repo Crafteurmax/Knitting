@@ -327,6 +327,33 @@ public class NodeTest
 
         Debug.Log("====================");
     }
+    
+    [Test]
+    public void NodeTestRecursive()
+    {
+        Debug.Log("==========\nNodeTestPrint\n==========");
+
+        string componentTitle = "Cassandre_6 {\"position\":\"850,5350\",\"size\":\"100,100\"}";
+        string componentData = "(if: $isOpen is \"false\")[...]\n" +
+                                "(else:)[C’était notre tableau préféré à l’école d’art...(if: $isHappy is \"false\")[(set: $oneTime to \"true\")]]\n" +
+                                "[[Ce_P_Tableau_Reponse]]";
+
+        StoryNode node = new StoryNode(componentTitle, componentData, story);
+
+        story.SetVariable("isOpen", "false");
+        story.SetVariable("isHappy", "false");
+        story.SetVariable("oneTime", "false");
+
+        Debug.Log(node.getText());
+        Assert.AreEqual("...", node.getText());
+
+        story.SetVariable("isOpen", "true");
+        Debug.Log(node.getText());
+        Assert.AreEqual("C’était notre tableau préféré à l’école d’art...", node.getText());
+        Assert.AreEqual("true",story.GetVariable("oneTime"));
+
+        Debug.Log("====================");
+    }
 
     // A UnityTest behaves like a coroutine in Play Mode. In Edit Mode you can use
     // `yield return null;` to skip a frame.

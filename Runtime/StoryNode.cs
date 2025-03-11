@@ -56,12 +56,12 @@ public class StoryNode
     // ########## SETUP ########## 
     private void ParseTitle(string _title)
     {
-        Regex regex = new Regex(@"(?<title>[^ ]*)( \[)?(?<tags>[^]]*)(\])? {""position"":""(?<posX>\d*),(?<posY>\d*)"",""size"":""(?<sizeX>\d*),(?<sizeY>\d*)""}");
+        Regex regex = new Regex(@"(?<title>[^{[]*)(\[)?(?<tags>[^]]*)(\])? {""position"":""(?<posX>\d*),(?<posY>\d*)"",""size"":""(?<sizeX>\d*),(?<sizeY>\d*)""}");
 
         Match match = regex.Match(_title);
         //Assert.IsTrue(match.Success, _title + " is not a valid title");
 
-        title = match.Groups["title"].Value;
+        title = match.Groups["title"].Value.Trim();
         
         string tagsString = match.Groups["tags"].Value;
         if(tagsString.Length != 0) foreach (string tag in tagsString.Split(" ")) tags.Add(tag);
@@ -170,10 +170,12 @@ public class StoryNode
             string text = ReplaceVariablesByValues(notCommands[i], "");
             if (text.Length > 0 && text[0] == '\n') text = text.Substring(1);
             parsedText += text;
+            Debug.Log("not commande " + i + "\"" + text + "\"");
 
             if (i < commands.Count)
             {
                 ParsingResult match = commands[i];
+                Debug.Log("commande " + i + "\"" + match.Value + "\"");
 
                 COMMAND_TYPE commandType = GetCommandType(match.Groups["commande"]);
                 switch (commandType)
