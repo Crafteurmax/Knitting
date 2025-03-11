@@ -8,6 +8,7 @@ using UnityEngine.Assertions;
 public class Story : MonoBehaviour
 {
     [SerializeField] private TextAsset twineText;
+    [SerializeField] bool printVariableWhenSet;
 
     // Story datas
     private string title;
@@ -156,6 +157,7 @@ public class Story : MonoBehaviour
 
     public void SetVariable(string variableName, string value)
     {
+        if(printVariableWhenSet) Debug.Log("set " + variableName + " to " + value);
         if (nodeVariable.ContainsKey(variableName)) nodeVariable[variableName] = value;
         else nodeVariable.Add(variableName, value);
     }

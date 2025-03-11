@@ -170,12 +170,12 @@ public class StoryNode
             string text = ReplaceVariablesByValues(notCommands[i], "");
             if (text.Length > 0 && text[0] == '\n') text = text.Substring(1);
             parsedText += text;
-            Debug.Log("not commande " + i + "\"" + text + "\"");
+            //Debug.Log("not commande " + i + "\"" + text + "\"");
 
             if (i < commands.Count)
             {
                 ParsingResult match = commands[i];
-                Debug.Log("commande " + i + "\"" + match.Value + "\"");
+                //Debug.Log("commande " + i + "\"" + match.Value + "\"");
 
                 COMMAND_TYPE commandType = GetCommandType(match.Groups["commande"]);
                 switch (commandType)
