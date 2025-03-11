@@ -39,7 +39,7 @@ public static class ParsingTools
         override public string ToString() {  return Value; }
     }
 
-    static public int FindInWord(string text, char separator, int offset = 0)
+    static public int FindInWord(string text, char separator, int offset = 0, int toIgnore = 0)
     {
         bool isInGuillemet = false;
         bool isInApostrophe = false;
@@ -47,7 +47,7 @@ public static class ParsingTools
 
         for (int i = offset; i < text.Length; i++)
         {
-            if (!isInApostrophe && !isInGuillemet && text[i] == separator) return i;
+            if (!isInApostrophe && !isInGuillemet && text[i] == separator) if (toIgnore == 0) return i; else toIgnore--;
             if (!skipnext && !isInGuillemet && text[i] == '\'') isInApostrophe = !isInApostrophe;
             if (!skipnext && !isInApostrophe && text[i] == '"') isInGuillemet = !isInGuillemet;
         }
@@ -77,16 +77,27 @@ public static class ParsingTools
     {
         int startIndex = FindInWord(text, begin, offset);
         int endIndex = FindInWord(text, end, startIndex + 1);
+        int firstEndIndex = endIndex;
+
 
         ParsingResult result = new ParsingResult();
         result.succes = false;
 
-        if (startIndex < 0 || endIndex < 0)
-        {
-            return result;
+        if (startIndex < 0 || endIndex < 0)return result;
+
+        string potentialValue = text.Substring(startIndex, endIndex - startIndex + 1);
+
+        while(!(CountOf(potentialValue, begin) == CountOf(potentialValue, end) || endIndex < firstEndIndex))
+        {             
+            endIndex = FindInWord(text, end, endIndex + 1);
+            //Debug.Log(endIndex + " " + potentialValue);
+            potentialValue = text.Substring(startIndex, endIndex - startIndex + 1);
         }
 
-        result.Value = text.Substring(startIndex , endIndex - startIndex + 1);
+        if(endIndex < firstEndIndex) return GetBetween(text, begin, end, startIndex + 1);
+
+        result.Value = potentialValue;
+        //Debug.Log("end : " + begin + " " + CountOf(result.Value,begin) + "," + end + " " + CountOf(result.Value,end));
         result.startIndex = startIndex;
         result.endIndex = endIndex + 1;
         result.succes = true;
@@ -210,6 +221,13 @@ public static class ParsingTools
 
         return result;
 
+    }
+
+    static public int CountOf(string text, char c)
+    {
+        int retour = 0;
+        foreach (char ch in text) if (ch == c) retour++;
+        return retour;
     }
 
 }

@@ -106,4 +106,11 @@ public class ParsingToolsTest
         Assert.AreEqual(expected, ParsingTools.GetOpposit(text, complement));
 
     }
+
+    [Test]
+    public void ParsingToolsTestGetBetweenWithTrap()
+    {
+        Assert.AreEqual("(()())", ParsingTools.GetBetween("(()())", '(', ')').Value);
+        Assert.AreEqual("()", ParsingTools.GetBetween("(()()", '(', ')').Value);
+    }
 }

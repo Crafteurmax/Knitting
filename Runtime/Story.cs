@@ -14,7 +14,7 @@ public class Story : MonoBehaviour
     private string ifid;
     private string format;
     private string formatVersion;
-    private int zoom;
+    private float zoom;
     private string start;
     private Dictionary<string, Color> tagColors = new Dictionary<string, Color>();
 
@@ -97,29 +97,41 @@ public class Story : MonoBehaviour
 
     private void ParseStoryData(string data)
     {
-        Regex RGX_parseData = new Regex(@"""ifid"": ""(?<ifid>[^""]*)(.|\n)*""format"": ""(?<format>[^""]*)(.|\n)*""format-version"": ""(?<formatVersion>\d*\.\d*\.\d*)(.|\n)*""start"": ""(?<start>[^""]*)(.|\n)*""tag-colors"": {(?<tagsColors>[^}]*)(.|\n)*""zoom"": ""?(?<zoom>\d+)".Replace('\'','\"'));
-        
-        Match match = RGX_parseData.Match(data);
+        Regex RGX_parseData = new Regex(@"""(?<name>[^""]*)"": (({(?<colors>[^}]*)})|(""?(?<value>[^""\n,]*)""?))", RegexOptions.Multiline);
 
-        if (match.Success)
+        MatchCollection datas = RGX_parseData.Matches(data);
+        foreach (Match dataMatch in datas)
         {
-            ifid = match.Groups["ifid"].Value;
-            format = match.Groups["format"].Value;
-            formatVersion = match.Groups["formatVersion"].Value;
-            start = match.Groups["start"].Value;
-            zoom = int.Parse(match.Groups["zoom"].Value);
-
-            Regex RGX_parseColor = new Regex(@"[^""]*""(?<tag>[^""]*)"": ""(?<color>[^""]*)""");
-
-            MatchCollection pairs = RGX_parseColor.Matches(match.Groups["tagsColors"].Value);
-            foreach (Match colorMatch in pairs)
+            switch (dataMatch.Groups["name"].Value)
             {
-                string tag = colorMatch.Groups["tag"].Value;
-                Color color = possibleColors[colorMatch.Groups["color"].Value];
-                tagColors.Add(tag, color);
+                case "ifid":
+                    ifid = dataMatch.Groups["value"].Value;
+                    break ;
+                case "format":
+                    format = dataMatch.Groups["value"].Value;
+                    break;
+                case "format-version":
+                    formatVersion = dataMatch.Groups["value"].Value;
+                    break;
+                case "start":
+                    start = dataMatch.Groups["value"].Value;
+                    break;
+                case "zoom":
+                    zoom = float.Parse(dataMatch.Groups["value"].Value.Replace('.',','));
+                    break;
+                case "tag-colors":
+                    Regex RGX_parseColor = new Regex(@"[^""]*""(?<tag>[^""]*)"": ""(?<color>[^""]*)""");
+
+                    MatchCollection pairs = RGX_parseColor.Matches(dataMatch.Groups["colors"].Value);
+                    foreach (Match colorMatch in pairs)
+                    {
+                        string tag = colorMatch.Groups["tag"].Value;
+                        Color color = possibleColors[colorMatch.Groups["color"].Value];
+                        tagColors.Add(tag, color);
+                    }
+                    break;
             }
         }
-        else Debug.LogWarning("StoryData have been parsed incorrectly, some data could be missing");
     }
 
     private void SetupPossiblesColors()
@@ -181,7 +193,7 @@ public class Story : MonoBehaviour
 
     public string GetFormatVersion() { return formatVersion; }
 
-    public int GetZoom() { return zoom; }
+    public float GetZoom() { return zoom; }
 
     public string GetStart() { return start; }
 
