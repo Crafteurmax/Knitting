@@ -192,6 +192,54 @@ public partial class twine_harloweBaseListener : Itwine_harloweListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitEither([NotNull] twine_harloweParser.EitherContext context) { }
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="twine_harloweParser.nth"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterNth([NotNull] twine_harloweParser.NthContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="twine_harloweParser.nth"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitNth([NotNull] twine_harloweParser.NthContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="twine_harloweParser.unless"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterUnless([NotNull] twine_harloweParser.UnlessContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="twine_harloweParser.unless"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitUnless([NotNull] twine_harloweParser.UnlessContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="twine_harloweParser.image"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterImage([NotNull] twine_harloweParser.ImageContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="twine_harloweParser.image"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitImage([NotNull] twine_harloweParser.ImageContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="twine_harloweParser.sound"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterSound([NotNull] twine_harloweParser.SoundContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="twine_harloweParser.sound"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitSound([NotNull] twine_harloweParser.SoundContext context) { }
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="twine_harloweParser.startExpr"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>

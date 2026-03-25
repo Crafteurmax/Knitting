@@ -3,7 +3,7 @@ grammar twine_harlowe;
 
 passage : stmt+ EOF;
 
-stmt: conditional_block | (LPAR WS* command WS* RPAR) | value | text;
+stmt: conditional_block | (LPAR WS* command WS* RBRACK) | (LPAR WS* command WS* RPAR) | value | text;
 
 conditional_block : ifblock WS* elseifblock* WS* elseblock? ;
 
@@ -17,6 +17,10 @@ command : set
         | cond
         | execute
         | either
+        | nth
+        | unless
+        | image
+        | sound
         ;
 
 set : SET WS* variable WS* TO WS* startExpr;
@@ -24,7 +28,11 @@ print : PRINT WS* startExpr;
 lowercase : LOWERCASE WS* startExpr;
 cond : COND WS* startExpr WS* COMMA WS* startExpr (WS* COMMA WS* startExpr WS* COMMA WS* startExpr)* WS* COMMA WS* startExpr;
 execute : EXECUTE WS* startExpr;
-either : EITHER WS*  startExpr (WS* COMMA WS* startExpr)*;
+either : EITHER WS* startExpr (WS* COMMA WS* startExpr)*;
+nth : NTH WS* startExpr (WS* COMMA WS* startExpr)*;
+unless : UNLESS WS* startExpr WS* RPAR LBRACK WS* stmt*;
+image : IMAGE WS* startExpr ;
+sound : SOUND WS* startExpr ;
 
 startExpr : expr;
 
@@ -81,6 +89,10 @@ LOWERCASE: 'lowercase:';
 COND: 'cond:';
 EXECUTE : 'execute:';
 EITHER : 'either:';
+NTH : 'nth:';
+UNLESS : 'unless:';
+IMAGE : 'image:';
+SOUND : 'sound:';
 TO: ' to ';
 ARR_START: 'a:';
 AND: 'and';

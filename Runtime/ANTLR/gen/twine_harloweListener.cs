@@ -161,6 +161,46 @@ public interface Itwine_harloweListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitEither([NotNull] twine_harloweParser.EitherContext context);
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="twine_harloweParser.nth"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterNth([NotNull] twine_harloweParser.NthContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="twine_harloweParser.nth"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitNth([NotNull] twine_harloweParser.NthContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="twine_harloweParser.unless"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterUnless([NotNull] twine_harloweParser.UnlessContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="twine_harloweParser.unless"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitUnless([NotNull] twine_harloweParser.UnlessContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="twine_harloweParser.image"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterImage([NotNull] twine_harloweParser.ImageContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="twine_harloweParser.image"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitImage([NotNull] twine_harloweParser.ImageContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="twine_harloweParser.sound"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterSound([NotNull] twine_harloweParser.SoundContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="twine_harloweParser.sound"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitSound([NotNull] twine_harloweParser.SoundContext context);
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="twine_harloweParser.startExpr"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>

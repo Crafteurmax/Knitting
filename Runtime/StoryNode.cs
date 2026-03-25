@@ -35,6 +35,7 @@ public class StoryNode
     private Story parentStrory;
 
     private Sprite sprite = null;
+    private AudioClip sound = null;
 
     public StoryNode(string _title, string _data, Story _parentStrory)
     {
@@ -316,6 +317,11 @@ public class StoryNode
 
     public bool HasTag(string tag) { return tags.Contains(tag); }
 
+    public void SetSprite(Sprite sprite) { this.sprite = sprite; }
     public Sprite GetSprite() { return sprite; }
+    
+    public void SetSound(AudioClip audio) {this.sound = audio; }
+
+    public AudioClip GetSound() { return sound; }
 
 }

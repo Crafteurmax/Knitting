@@ -40,9 +40,17 @@ public class Story : MonoBehaviour
         public Sprite sprite;
     }
 
+    [System.Serializable]
+    public class DescribedSound
+    {
+        public string title;
+        public AudioClip sound;
+    }
+
     [SerializeField] bool usePath;
     [SerializeField] string path;
     [SerializeField] private List<DescribedSprite> sprites = new List<DescribedSprite>();
+    [SerializeField] private List<DescribedSound> sounds = new List<DescribedSound>();
 
 
     // Debug 
@@ -207,9 +215,14 @@ public class Story : MonoBehaviour
 
     public StoryNode GetCurrentNode() { return currentNode; }
 
-    public Sprite getSprite(string title)
+    public Sprite GetSprite(string title)
     {
         foreach(DescribedSprite sprite in sprites) if (sprite.title == title) return sprite.sprite;
+        return null;
+    }
+    public AudioClip GetSound(string title)
+    {
+        foreach(DescribedSound sound in sounds) if (sound.title == title) return sound.sound;
         return null;
     }
 

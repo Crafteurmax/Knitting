@@ -110,6 +110,30 @@ public interface Itwine_harloweVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitEither([NotNull] twine_harloweParser.EitherContext context);
 	/// <summary>
+	/// Visit a parse tree produced by <see cref="twine_harloweParser.nth"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitNth([NotNull] twine_harloweParser.NthContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="twine_harloweParser.unless"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitUnless([NotNull] twine_harloweParser.UnlessContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="twine_harloweParser.image"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitImage([NotNull] twine_harloweParser.ImageContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="twine_harloweParser.sound"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitSound([NotNull] twine_harloweParser.SoundContext context);
+	/// <summary>
 	/// Visit a parse tree produced by <see cref="twine_harloweParser.startExpr"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>

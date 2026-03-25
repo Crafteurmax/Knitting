@@ -209,6 +209,32 @@ namespace Runtime.ANTLR
             return new Either(startExprs);
         }
 
+        public override Statement VisitNth(twine_harloweParser.NthContext context)
+        {
+            List<StartExpr> startExprs = new List<StartExpr>();
+            foreach (twine_harloweParser.StartExprContext expr in context.startExpr()) 
+                startExprs.Add((StartExpr)VisitStartExpr(expr));
+            
+            return new Nth(startExprs);
+        }
+
+        public override Statement VisitUnless(twine_harloweParser.UnlessContext context)
+        {
+            List<Statement> stmts = new List<Statement>();
+            foreach (twine_harloweParser.StmtContext statement in context.stmt()) stmts.Add(VisitStmt(statement));
+            return new Unless((StartExpr)VisitStartExpr(context.startExpr()), new Passage(stmts));
+        }
+
+        public override Statement VisitImage(twine_harloweParser.ImageContext context)
+        {
+            return new Image((StartExpr) VisitStartExpr(context.startExpr()));
+        }
+
+        public override Statement VisitSound(twine_harloweParser.SoundContext context)
+        {
+            return new Sound((StartExpr)VisitStartExpr(context.startExpr()));
+        }
+
         public override Statement VisitStartExpr(twine_harloweParser.StartExprContext context)
         {
             // Debug.Log("StartExpr");
