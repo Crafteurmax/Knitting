@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.TestTools;
+using UnityEngine.UIElements;
 
 public class NodeTest
 {
@@ -26,7 +28,7 @@ public class NodeTest
 
         string componentTitle = "Cassandre_6 [PNJ QUESTION] {\"position\":\"850,5350\",\"size\":\"100,100\"}";
         string componentData = "(set: $A2 to '')\n" +
-                                "Dis-moi machine savante. Quelle est la voie à suivre pour atteindre mes ambitions ?\n" +
+                                "Dis-moi machine savante. Quelle est la voie ï¿½ suivre pour atteindre mes ambitions ?\n" +
                                 "\n" +
                                 "La Papesse[[A2HighPriestess]]\n" +
                                 "L'Empereur[[A2Emperor]]\n" +
@@ -55,7 +57,7 @@ public class NodeTest
 
         string componentTitle = "Cassandre_6 {\"position\":\"850,5350\",\"size\":\"100,100\"}";
         string componentData = "(set: $A2 to '')\n" +
-                                "Dis-moi machine savante. Quelle est la voie à suivre pour atteindre mes ambitions ?\n" +
+                                "Dis-moi machine savante. Quelle est la voie ï¿½ suivre pour atteindre mes ambitions ?\n" +
                                 "\n" +
                                 "La Papesse[[A2HighPriestess]]\n" +
                                 "L'Empereur[[A2Emperor]]\n" +
@@ -83,7 +85,7 @@ public class NodeTest
 
         string componentTitle = "Cassandre_6 {\"position\":\"850,5350\",\"size\":\"100,100\"}";
         string componentData = "(set: $A2 to '')\n" +
-                                "Dis-moi machine savante. Quelle est la voie à suivre pour atteindre mes ambitions ?\n" +
+                                "Dis-moi machine savante. Quelle est la voie ï¿½ suivre pour atteindre mes ambitions ?\n" +
                                 "\n" +
                                 "[[La Papesse->A2HighPriestess]]\n" +
                                 "[[A2Emperor<-L'Empereur]]\n" +
@@ -91,7 +93,7 @@ public class NodeTest
                                 "[[Les Amoureux->A2Lovers]]";
 
 
-        string outputedText = "Dis-moi machine savante. Quelle est la voie à suivre pour atteindre mes ambitions ?";
+        string outputedText = "Dis-moi machine savante. Quelle est la voie ï¿½ suivre pour atteindre mes ambitions ?";
         List<NextNode> goodNextNodes = new List<NextNode>();
         goodNextNodes.Add(new NextNode("A2HighPriestess", "La Papesse"));
         goodNextNodes.Add(new NextNode("A2Emperor", "L'Empereur"));
@@ -128,7 +130,7 @@ public class NodeTest
         StoryNode nodeA = new StoryNode(componentTitle, componentData, story);
         nodeA.getText();
 
-        string value = story.GetVariable("Variable");
+        string value = story.GetVariable("Variable").stringValue;
 
         Assert.AreEqual(value, "ThisIsAVariableValue");
 
@@ -146,9 +148,9 @@ public class NodeTest
 
 
         string componentTitleB = "Cassandre_6 {\"position\":\"850,5350\",\"size\":\"100,100\"}";
-        string componentDataB = "(if: $Variable is \"ThisIsAVariableValue\")[Vous aviez raison, la Nouvelle Lune n’est que mensonge. Ma vie n’a cessé de s’améliorer depuis que je l’ai quittée.]\n" +
-                                "(else-if: $Variable is 'ThisIsAnOtherVariableValue')[La vache... CETTE vache !! Elle est en train de tout me prendre ! Mon poste, mon parti, tous mes électeurs...]\n" +
-                                "(else:)[La Nouvelle Lune m’a guidée dans l’ascension au sein de l’ordre. Je n’aurai jamais pu espérer une évolution plus fulgurante.]";
+        string componentDataB = "(if: $Variable is \"ThisIsAVariableValue\")[Vous aviez raison, la Nouvelle Lune nï¿½est que mensonge. Ma vie nï¿½a cessï¿½ de sï¿½amï¿½liorer depuis que je lï¿½ai quittï¿½e.]\n" +
+                                "(else-if: $Variable is 'ThisIsAnOtherVariableValue')[La vache... CETTE vache !! Elle est en train de tout me prendre ! Mon poste, mon parti, tous mes ï¿½lecteurs...]\n" +
+                                "(else:)[La Nouvelle Lune mï¿½a guidï¿½e dans lï¿½ascension au sein de lï¿½ordre. Je nï¿½aurai jamais pu espï¿½rer une ï¿½volution plus fulgurante.]";
         StoryNode nodeB = new StoryNode(componentTitleB, componentDataB, story);
 
         string componentTitleC = "Cassandre_6 {\"position\":\"850,5350\",\"size\":\"100,100\"}";
@@ -161,21 +163,92 @@ public class NodeTest
         nodeD.getText();
 
         Debug.Log(nodeB.getText());
-        Assert.AreEqual("La Nouvelle Lune m’a guidée dans l’ascension au sein de l’ordre. Je n’aurai jamais pu espérer une évolution plus fulgurante.", nodeB.getText());
+        Assert.AreEqual("La Nouvelle Lune mï¿½a guidï¿½e dans lï¿½ascension au sein de lï¿½ordre. Je nï¿½aurai jamais pu espï¿½rer une ï¿½volution plus fulgurante.", nodeB.getText());
         
         nodeA.getText();
-        string value = story.GetVariable("Variable");
+        string value = story.GetVariable("Variable").stringValue;
         Assert.AreEqual(value, "ThisIsAVariableValue");
 
         Debug.Log(nodeB.getText());
-        Assert.AreEqual("Vous aviez raison, la Nouvelle Lune n’est que mensonge. Ma vie n’a cessé de s’améliorer depuis que je l’ai quittée.", nodeB.getText());
+        Assert.AreEqual("Vous aviez raison, la Nouvelle Lune nï¿½est que mensonge. Ma vie nï¿½a cessï¿½ de sï¿½amï¿½liorer depuis que je lï¿½ai quittï¿½e.", nodeB.getText());
         
         nodeC.getText();
-        value = story.GetVariable("Variable");
+        value = story.GetVariable("Variable").stringValue;
         Assert.AreEqual(value, "ThisIsAnOtherVariableValue");
 
         Debug.Log(nodeB.getText());
-        Assert.AreEqual("La vache... CETTE vache !! Elle est en train de tout me prendre ! Mon poste, mon parti, tous mes électeurs...", nodeB.getText());
+        Assert.AreEqual("La vache... CETTE vache !! Elle est en train de tout me prendre ! Mon poste, mon parti, tous mes ï¿½lecteurs...", nodeB.getText());
+
+        Debug.Log("====================");
+    }
+
+    [Test]
+    public void NodeTestSimpleIf2()
+    {
+        Debug.Log("==========\nNodeTestSimpleIf2\n==========");
+
+        string componentTitleA = "Ce_P_Crime {\"position\":\"1200,400\",\"size\":\"100,100\"}}";
+        string componentDataA = "(set: $isOpen to 'false')";
+        StoryNode nodeA = new StoryNode(componentTitleA, componentDataA, story);
+
+
+        string componentTitleB = "Ce_P_Crime {\"position\":\"1200,400\",\"size\":\"100,100\"}";
+        string componentDataB = "(if: $isOpen is \"false\")[...]\n" +
+                                "(else:)[Mon chef dï¿½oeuvre...]";
+
+        StoryNode nodeB = new StoryNode(componentTitleB, componentDataB, story);
+
+        string componentTitleC = "Cassandre_6 {\"position\":\"850,5350\",\"size\":\"100,100\"}";
+        string componentDataC = "(set: $isOpen to 'true')";
+        StoryNode nodeC = new StoryNode(componentTitleC, componentDataC, story);
+
+
+        Debug.Log(nodeA.getText());
+
+        Debug.Log(nodeB.getText());
+        Assert.AreEqual("...", nodeB.getText());
+
+        nodeC.getText();
+
+        Debug.Log(nodeB.getText());
+        Assert.AreEqual("Mon chef dï¿½oeuvre...", nodeB.getText());
+
+        Debug.Log("====================");
+    }
+
+    [Test]
+    public void NodeTestSimpleIf3()
+    {
+        Debug.Log("==========\nNodeTestSimpleIf3\n==========");
+
+        string componentTitleA = "Ce_P_Crime {\"position\":\"1200,400\",\"size\":\"100,100\"}}";
+        string componentDataA = "(set: $isOpen to 'false')\n"+
+                                "(set: $isHappy to \"false\")";
+        StoryNode nodeA = new StoryNode(componentTitleA, componentDataA, story);
+
+
+        string componentTitleB = "Ce_P_Crime {\"position\":\"1200,400\",\"size\":\"100,100\"}";
+        string componentDataB = "(if: $isOpen is \"false\")[...]\n"+
+                                "(else:)[Cï¿½ï¿½tait notre tableau prï¿½fï¿½rï¿½ ï¿½ lï¿½ï¿½cole dï¿½art...Jï¿½aimerai que lï¿½on revienne ï¿½ cette ï¿½poque oï¿½ tout ï¿½tait plus simple...Pas de fans, pas de paparazzis, juste deux amis qui admirent un citron...Dï¿½solï¿½ de tï¿½avoir ignorï¿½ pendant si longtemps.Le succï¿½s mï¿½a poussï¿½ ï¿½ mï¿½isoler... \n" +
+                                "(if: $isHappy is \"false\")[(set: $oneTime to \"true\")]]\n" +
+                                "[[Ce_P_Tableau_Reponse]]";
+
+        StoryNode nodeB = new StoryNode(componentTitleB, componentDataB, story);
+
+        string componentTitleC = "Cassandre_6 {\"position\":\"850,5350\",\"size\":\"100,100\"}";
+        string componentDataC = "(set: $isOpen to 'true')";
+        StoryNode nodeC = new StoryNode(componentTitleC, componentDataC, story);
+
+
+        Debug.Log(nodeA.getText());
+
+        Debug.Log(nodeB.getText());
+        Assert.AreEqual("...", nodeB.getText());
+
+        nodeC.getText();
+
+        Debug.Log(nodeB.getText());
+        Assert.AreEqual("Cï¿½ï¿½tait notre tableau prï¿½fï¿½rï¿½ ï¿½ lï¿½ï¿½cole dï¿½art...Jï¿½aimerai que lï¿½on revienne ï¿½ cette ï¿½poque oï¿½ tout ï¿½tait plus simple...Pas de fans, pas de paparazzis, juste deux amis qui admirent un citron...Dï¿½solï¿½ de tï¿½avoir ignorï¿½ pendant si longtemps.Le succï¿½s mï¿½a poussï¿½ ï¿½ mï¿½isoler...", nodeB.getText());
 
         Debug.Log("====================");
     }
@@ -191,7 +264,7 @@ public class NodeTest
         StoryNode nodeA = new StoryNode(componentTitleA, componentDataA, story);
 
         string componentTitleB = "Cassandre_6 {\"position\":\"850,5350\",\"size\":\"100,100\"}";
-        string componentDataB = "(unless: $Variable is 'ThisIsAVariableValue')[Vous aviez raison, la Nouvelle Lune n’est que mensonge.]";
+        string componentDataB = "(unless: $Variable is 'ThisIsAVariableValue')[Vous aviez raison, la Nouvelle Lune nï¿½est que mensonge.]";
         StoryNode nodeB = new StoryNode(componentTitleB, componentDataB, story);
 
         string componentTitleC = "Cassandre_6 {\"position\":\"850,5350\",\"size\":\"100,100\"}";
@@ -200,7 +273,7 @@ public class NodeTest
 
         nodeA.getText();
         Debug.Log(nodeB.getText());
-        Assert.AreEqual("Vous aviez raison, la Nouvelle Lune n’est que mensonge.", nodeB.getText());
+        Assert.AreEqual("Vous aviez raison, la Nouvelle Lune nï¿½est que mensonge.", nodeB.getText());
 
         nodeC.getText();
         Debug.Log(nodeB.getText());
@@ -328,29 +401,18 @@ public class NodeTest
         Debug.Log("====================");
     }
     
+    
     [Test]
-    public void NodeTestRecursive()
+    public void NodeTestLowercase()
     {
         Debug.Log("==========\nNodeTestPrint\n==========");
 
         string componentTitle = "Cassandre_6 {\"position\":\"850,5350\",\"size\":\"100,100\"}";
-        string componentData = "(if: $isOpen is \"false\")[...]\n" +
-                                "(else:)[C’était notre tableau préféré à l’école d’art...(if: $isHappy is \"false\")[(set: $oneTime to \"true\")]]\n" +
-                                "[[Ce_P_Tableau_Reponse]]";
-
+        string componentData = "this word : (lowercase: \"CaT\") should be all in lowercase.";
         StoryNode node = new StoryNode(componentTitle, componentData, story);
 
-        story.SetVariable("isOpen", "false");
-        story.SetVariable("isHappy", "false");
-        story.SetVariable("oneTime", "false");
-
         Debug.Log(node.getText());
-        Assert.AreEqual("...", node.getText());
-
-        story.SetVariable("isOpen", "true");
-        Debug.Log(node.getText());
-        Assert.AreEqual("C’était notre tableau préféré à l’école d’art...", node.getText());
-        Assert.AreEqual("true",story.GetVariable("oneTime"));
+        Assert.AreEqual("this word : cat should be all in lowercase.", node.getText());
 
         Debug.Log("====================");
     }

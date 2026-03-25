@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Text.RegularExpressions;
+using Runtime.ANTLR.TwineValue;
+using Runtime.ANTLR.Value;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -25,7 +27,7 @@ public class Story : MonoBehaviour
 
     // Nodes
     Dictionary<string,StoryNode> nodes = new Dictionary<string, StoryNode>();
-    Dictionary<string, string> nodeVariable = new Dictionary<string, string>();
+    Dictionary<string, Value> nodeVariable = new Dictionary<string, Value>();
     StoryNode currentNode;
 
     // Customisation
@@ -147,19 +149,21 @@ public class Story : MonoBehaviour
 
     // ########## node variable ########## 
 
-    public string GetVariable(string variableName)
+    public Value GetVariable(string variableName)
     {
-        string returnValue;
+        // Debug.Log("try to get : " + variableName);
+        Value returnValue;
         bool isSet = nodeVariable.TryGetValue(variableName, out returnValue);
-        //Assert.IsTrue(isSet, variableName + " is not defined");
+        Assert.IsTrue(isSet, variableName + " is not defined");
         return returnValue;
     }
 
-    public void SetVariable(string variableName, string value)
+    public void SetVariable(string variableName, Value value)
     {
         if(printVariableWhenSet) Debug.Log("set " + variableName + " to " + value);
         if (nodeVariable.ContainsKey(variableName)) nodeVariable[variableName] = value;
         else nodeVariable.Add(variableName, value);
+        // Debug.Log(variableName + " as been set");
     }
 
     // ########## Node changement ########## 

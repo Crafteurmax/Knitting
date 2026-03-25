@@ -6,6 +6,10 @@ using UnityEngine.Assertions;
 using static ParsingTools;
 using Random = UnityEngine.Random;
 
+using Antlr4.Runtime;
+using Antlr4.Runtime.Tree;
+using Runtime.ANTLR;
+
 public class NextNode
 {
     public string title;
@@ -151,141 +155,24 @@ public class StoryNode
 
     public string getText()
     {
-        return ParseText(rawText);
+        // Debug.Log(rawText);
+        return ParseText(rawText, parentStrory, this);
     }
-
-    private string ParseText(string textToParse)
+    
+    
+    public string ParseText(string textToParse, Story story, StoryNode storyNode)
     {
-        //Regex patternExtract = new Regex(@"\((?<commande>[^)]*)\)\n?([^[\n]*\[(?<text>[^]]*)\]\n?|)");
-        bool isConditionAlreadyValide = false;
-
-        List<ParsingResult> commands = ParsingTools.GetAllCommandes(textToParse);
-
-        List<string> notCommands = ParsingTools.GetOpposit(textToParse,commands);
-
-        string parsedText = "";
-
-        for(int i = 0; i < notCommands.Count; i++)
-        {
-            string text = ReplaceVariablesByValues(notCommands[i], "");
-            if (text.Length > 0 && text[0] == '\n') text = text.Substring(1);
-            parsedText += text;
-            //Debug.Log("not commande " + i + "\"" + text + "\"");
-
-            if (i < commands.Count)
-            {
-                ParsingResult match = commands[i];
-                //Debug.Log("commande " + i + "\"" + match.Value + "\"");
-
-                COMMAND_TYPE commandType = GetCommandType(match.Groups["commande"]);
-                switch (commandType)
-                {
-                    case COMMAND_TYPE.SET:
-                        // Regex patternExtractSetVariable = new Regex(@"set: \$(?<variableName>.*) to ('|"")(?<value>.*)('|"")");
-                        ParsingResult variableMatch = ParsingTools.GetSet(match.Groups["commande"]);
-                        //Assert.IsTrue(variableMatch.succes);
-
-                        // Debug.Log("[" + variableMatch.Groups["variableName"] + "]");
-
-                        parentStrory.SetVariable(variableMatch.Groups["variableName"], variableMatch.Groups["value"]);
-                        break;
-                    case COMMAND_TYPE.IF:
-                        isConditionAlreadyValide = false;
-
-                        if (TestCondition(match.Groups["commande"]))
-                        {
-                            isConditionAlreadyValide = true;
-                            parsedText += ParseText(match.Groups["text"]);
-                        }
-
-                        break;
-                    case COMMAND_TYPE.ELSEIF:
-                        if (isConditionAlreadyValide) break;
-
-                        if (TestCondition(match.Groups["commande"]))
-                        {
-                            isConditionAlreadyValide = true;
-                            parsedText += ParseText(match.Groups["text"]);
-                        }
-                        break;
-                    case COMMAND_TYPE.ELSE:
-                        if (isConditionAlreadyValide) break;
-                        parsedText += ParseText(match.Groups["text"]);
-                        break;
-                    case COMMAND_TYPE.SOUND:
-
-                        PlaySound(match.Groups["commande"]);
-                        break;
-                    case COMMAND_TYPE.UNLESS:
-                        if (!TestCondition(match.Groups["commande"])) parsedText += ParseText(match.Groups["text"]);
-                        break;
-                    case COMMAND_TYPE.EITHER:
-                        string formatedText = ReplaceVariablesByValues(match.Groups["commande"], "");
-                        // Regex RGX_ExtractChoices = new Regex(@"'(?<choice>[^']*)'");
-
-                        List<ParsingResult> matches = ParsingTools.GetAllWords(formatedText);
-                        parsedText += matches[Random.Range(0, matches.Count)].Groups["Inside"];
-
-                        break;
-                    case COMMAND_TYPE.COND:
-                        string arguments = match.Groups["commande"].Remove(0, 5);
-
-                        List<string> splitedArguments = ParsingTools.CarefullSplit(arguments,',');
-
-                        bool foundValidCondition = false;
-                        
-                        for(int j  = 0; j < splitedArguments.Count /2; j+=2)
-                        {
-                            if (!foundValidCondition && TestCondition(splitedArguments[j])) 
-                            {
-                                parsedText += ReplaceVariablesByValues(splitedArguments[j + 1], "").Substring(2,splitedArguments[j +1].Length - 3); 
-                                foundValidCondition = true;
-                                break;
-                            }
-
-                        }
-
-                        if(!foundValidCondition) parsedText += ReplaceVariablesByValues(splitedArguments[splitedArguments.Count - 1], "")
-                                .Substring(2, splitedArguments[splitedArguments.Count - 1].Length - 3);
-
-                        break;
-                    case COMMAND_TYPE.NTH:
-                        string arguments2 = match.Groups["commande"].Remove(0, 4);
-
-                        List<string> splitedArguments2 = ParsingTools.CarefullSplit(ReplaceVariablesByValues(arguments2, ""),',');
-
-                        int nth = 0;
-                        int.TryParse(splitedArguments2[0], out nth);
-                        //Assert.IsTrue(int.TryParse(splitedArguments2[0], out nth), splitedArguments2[0] + " is not a number");
-
-                        // Debug.Log("splitedArguments2.Count : " + splitedArguments2.Count);
-                        nth = (nth - 1) % (splitedArguments2.Count - 1) + 1;
-                        // Debug.Log("nth : " + nth);
-                        parsedText += ReplaceVariablesByValues(splitedArguments2[nth], "").Substring(2, splitedArguments2[nth].Length - 3);
-
-
-                        break;
-                    case COMMAND_TYPE.PRINT:
-                        string argument = match.Groups["commande"].Remove(0, 6);
-                        argument = argument.Trim();
-                        parsedText += ReplaceVariablesByValues(argument, "");
-                        break;
-                    case COMMAND_TYPE.IMAGE:
-                        string imageName = ParsingTools.GetWord(match.Groups["commande"],6).Groups["Inside"];
-                        sprite = parentStrory.getSprite(imageName); 
-                        break;
-                    case COMMAND_TYPE.DEFAULT:
-                        // Debug.Log("false positve");
-                        parsedText += ReplaceVariablesByValues(match.Value, "");
-                        break;
-                }
-            }
-        }
-
-
+        Passage passage = ANTLRWrapper.getPassagesTree(textToParse);
+        // Debug.Log("visited successfully");
+        
+        // Debug.Log(passage.ToString());
+        
+        string parsedText = passage.Collapse(story, storyNode).Trim();
+        
         return parsedText;
     }
 
+    /*
     private COMMAND_TYPE GetCommandType(string command)
     {
         if (command.StartsWith("set:")) return COMMAND_TYPE.SET;
@@ -301,7 +188,9 @@ public class StoryNode
         if (command.StartsWith("image:")) return COMMAND_TYPE.IMAGE;
         return COMMAND_TYPE.DEFAULT;
     }
+    */
 
+    /*
     private bool TestCondition(string condition)
     {
         // replace variable by real value
@@ -389,7 +278,9 @@ public class StoryNode
 
         return false;
     }
-
+    */
+    
+    /*
     private string ReplaceVariablesByValues(string text, string delimiter)
     {
         Regex RGX_FindVariable = new Regex(@"\$\D[^\s,]*");
@@ -402,7 +293,9 @@ public class StoryNode
         }
         return text;
     }
+    */
 
+    /*
     private void PlaySound(string sound)
     {
         Regex patternSound = new Regex(@"(sound): (?<soundType>.*)");
@@ -412,6 +305,7 @@ public class StoryNode
         // Debug.Log(soundType);
         //Assert.IsTrue(false, "Not implemented");
     }
+    */
 
     // ########## GETTER / SETTER ########## 
     public string GetTitle() { return title; }
