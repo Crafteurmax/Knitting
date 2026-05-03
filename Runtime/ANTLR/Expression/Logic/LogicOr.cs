@@ -26,7 +26,7 @@ namespace Runtime.ANTLR.Expression
             
             // Trivial elements
             
-            if(left.valueType == ValueType.Boolean && right.valueType == ValueType.Boolean) return new Value.Value((bool)left || (bool) right);
+            if(left.valueType == ValueType.Boolean && right.valueType == ValueType.Boolean) return new Value.BoolValue((bool)left || (bool) right);
             
             
             throw new NotImplementedException();

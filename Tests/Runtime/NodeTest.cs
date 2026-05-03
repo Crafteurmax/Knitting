@@ -130,7 +130,7 @@ public class NodeTest
         StoryNode nodeA = new StoryNode(componentTitle, componentData, story);
         nodeA.getText();
 
-        string value = story.GetVariable("Variable").stringValue;
+        string value = story.GetVariable("Variable");
 
         Assert.AreEqual(value, "ThisIsAVariableValue");
 
@@ -166,14 +166,14 @@ public class NodeTest
         Assert.AreEqual("La Nouvelle Lune m�a guid�e dans l�ascension au sein de l�ordre. Je n�aurai jamais pu esp�rer une �volution plus fulgurante.", nodeB.getText());
         
         nodeA.getText();
-        string value = story.GetVariable("Variable").stringValue;
+        string value = story.GetVariable("Variable");
         Assert.AreEqual(value, "ThisIsAVariableValue");
 
         Debug.Log(nodeB.getText());
         Assert.AreEqual("Vous aviez raison, la Nouvelle Lune n�est que mensonge. Ma vie n�a cess� de s�am�liorer depuis que je l�ai quitt�e.", nodeB.getText());
         
         nodeC.getText();
-        value = story.GetVariable("Variable").stringValue;
+        value = story.GetVariable("Variable");
         Assert.AreEqual(value, "ThisIsAnOtherVariableValue");
 
         Debug.Log(nodeB.getText());
