@@ -112,11 +112,11 @@ public class ANTLRParsingTest
     {
         Debug.Log("==========\nANTLRParsingTest_Parentheses\n==========");
         
-        Passage passage = ANTLRWrapper.getPassagesTree("(execute: (10 + 10) * 2");
+        Passage passage = ANTLRWrapper.getPassagesTree("(execute: (10 + 10) * 2)");
         int value = ((Execute)passage.statements[0]).Evaluate(null, null);
         Assert.AreEqual(40, value);
         
-        passage = ANTLRWrapper.getPassagesTree("(execute: 2 * (10 + 10)");
+        passage = ANTLRWrapper.getPassagesTree("(execute: 2 * (10 + 10))");
         value = ((Execute)passage.statements[0]).Evaluate(null, null);
         Assert.AreEqual(40, value);
         
@@ -129,35 +129,35 @@ public class ANTLRParsingTest
     {
         Debug.Log("==========\nANTLRParsingTest_BooleanLogic\n==========");
         
-        Passage passage = ANTLRWrapper.getPassagesTree("(execute: true and true");
+        Passage passage = ANTLRWrapper.getPassagesTree("(execute: true and true)");
         bool value = ((Execute)passage.statements[0]).Evaluate(null, null);
         Assert.AreEqual(true, value);
         
-        passage = ANTLRWrapper.getPassagesTree("(execute: false and true");
+        passage = ANTLRWrapper.getPassagesTree("(execute: false and true)");
         value = ((Execute)passage.statements[0]).Evaluate(null, null);
         Assert.AreEqual(false, value);
         
-        passage = ANTLRWrapper.getPassagesTree("(execute: false and false");
+        passage = ANTLRWrapper.getPassagesTree("(execute: false and false)");
         value = ((Execute)passage.statements[0]).Evaluate(null, null);
         Assert.AreEqual(false, value);
         
-        passage = ANTLRWrapper.getPassagesTree("(execute: false and false");
+        passage = ANTLRWrapper.getPassagesTree("(execute: false and false)");
         value = ((Execute)passage.statements[0]).Evaluate(null, null);
         Assert.AreEqual(false, value);
         
-        passage = ANTLRWrapper.getPassagesTree("(execute: true or true");
+        passage = ANTLRWrapper.getPassagesTree("(execute: true or true)");
         value = ((Execute)passage.statements[0]).Evaluate(null, null);
         Assert.AreEqual(true, value);
         
-        passage = ANTLRWrapper.getPassagesTree("(execute: false or true");
+        passage = ANTLRWrapper.getPassagesTree("(execute: false or true)");
         value = ((Execute)passage.statements[0]).Evaluate(null, null);
         Assert.AreEqual(true, value);
         
-        passage = ANTLRWrapper.getPassagesTree("(execute: true or false");
+        passage = ANTLRWrapper.getPassagesTree("(execute: true or false)");
         value = ((Execute)passage.statements[0]).Evaluate(null, null);
         Assert.AreEqual(true, value);
         
-        passage = ANTLRWrapper.getPassagesTree("(execute: false or false");
+        passage = ANTLRWrapper.getPassagesTree("(execute: false or false)");
         value = ((Execute)passage.statements[0]).Evaluate(null, null);
         Assert.AreEqual(false, value);
         
@@ -168,67 +168,67 @@ public class ANTLRParsingTest
     {
         Debug.Log("==========\nANTLRParsingTest_Comparison\n==========");
         
-        Passage passage = ANTLRWrapper.getPassagesTree("(execute: 10 is 10");
+        Passage passage = ANTLRWrapper.getPassagesTree("(execute: 10 is 10)");
         bool value = ((Execute)passage.statements[0]).Evaluate(null, null);
         Assert.AreEqual(true, value);
         
-        passage = ANTLRWrapper.getPassagesTree("(execute: 10 is 20");
+        passage = ANTLRWrapper.getPassagesTree("(execute: 10 is 20)");
         value = ((Execute)passage.statements[0]).Evaluate(null, null);
         Assert.AreEqual(false, value);
         
-        passage = ANTLRWrapper.getPassagesTree("(execute: 10 is not 10");
+        passage = ANTLRWrapper.getPassagesTree("(execute: 10 is not 10)");
         value = ((Execute)passage.statements[0]).Evaluate(null, null);
         Assert.AreEqual(false, value);
         
-        passage = ANTLRWrapper.getPassagesTree("(execute: 10 is not 20");
+        passage = ANTLRWrapper.getPassagesTree("(execute: 10 is not 20)");
         value = ((Execute)passage.statements[0]).Evaluate(null, null);
         Assert.AreEqual(true, value);
 
-        passage = ANTLRWrapper.getPassagesTree("(execute: 10 > 20");
+        passage = ANTLRWrapper.getPassagesTree("(execute: 10 > 20)");
         value = ((Execute)passage.statements[0]).Evaluate(null, null);
         Assert.AreEqual(false, value);
         
-        passage = ANTLRWrapper.getPassagesTree("(execute: 10 > 10");
+        passage = ANTLRWrapper.getPassagesTree("(execute: 10 > 10)");
         value = ((Execute)passage.statements[0]).Evaluate(null, null);
         Assert.AreEqual(false, value);
         
-        passage = ANTLRWrapper.getPassagesTree("(execute: 20 > 10");
+        passage = ANTLRWrapper.getPassagesTree("(execute: 20 > 10)");
         value = ((Execute)passage.statements[0]).Evaluate(null, null);
         Assert.AreEqual(true, value);
         
-        passage = ANTLRWrapper.getPassagesTree("(execute: 10 < 20");
+        passage = ANTLRWrapper.getPassagesTree("(execute: 10 < 20)");
         value = ((Execute)passage.statements[0]).Evaluate(null, null);
         Assert.AreEqual(true, value);
         
-        passage = ANTLRWrapper.getPassagesTree("(execute: 10 < 10");
+        passage = ANTLRWrapper.getPassagesTree("(execute: 10 < 10)");
         value = ((Execute)passage.statements[0]).Evaluate(null, null);
         Assert.AreEqual(false, value);
         
-        passage = ANTLRWrapper.getPassagesTree("(execute: 20 < 10");
+        passage = ANTLRWrapper.getPassagesTree("(execute: 20 < 10)");
         value = ((Execute)passage.statements[0]).Evaluate(null, null);
         Assert.AreEqual(false, value);
         
-        passage = ANTLRWrapper.getPassagesTree("(execute: 10 >= 20");
+        passage = ANTLRWrapper.getPassagesTree("(execute: 10 >= 20)");
         value = ((Execute)passage.statements[0]).Evaluate(null, null);
         Assert.AreEqual(false, value);
         
-        passage = ANTLRWrapper.getPassagesTree("(execute: 10 >= 10");
+        passage = ANTLRWrapper.getPassagesTree("(execute: 10 >= 10)");
         value = ((Execute)passage.statements[0]).Evaluate(null, null);
         Assert.AreEqual(true, value);
         
-        passage = ANTLRWrapper.getPassagesTree("(execute: 20 >= 10");
+        passage = ANTLRWrapper.getPassagesTree("(execute: 20 >= 10)");
         value = ((Execute)passage.statements[0]).Evaluate(null, null);
         Assert.AreEqual(true, value);
         
-        passage = ANTLRWrapper.getPassagesTree("(execute: 10 <= 20");
+        passage = ANTLRWrapper.getPassagesTree("(execute: 10 <= 20)");
         value = ((Execute)passage.statements[0]).Evaluate(null, null);
         Assert.AreEqual(true, value);
         
-        passage = ANTLRWrapper.getPassagesTree("(execute: 10 <= 10");
+        passage = ANTLRWrapper.getPassagesTree("(execute: 10 <= 10)");
         value = ((Execute)passage.statements[0]).Evaluate(null, null);
         Assert.AreEqual(true, value);
         
-        passage = ANTLRWrapper.getPassagesTree("(execute: 20 <= 10");
+        passage = ANTLRWrapper.getPassagesTree("(execute: 20 <= 10)");
         value = ((Execute)passage.statements[0]).Evaluate(null, null);
         Assert.AreEqual(false, value);
         

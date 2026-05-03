@@ -130,13 +130,13 @@ namespace Runtime.ANTLR
             switch (type)
             {
                 case ValueType.String:
-                    return  new Value.Value(valueText.Substring(1,valueText.Length-2));
+                    return  new Value.StringValue(valueText.Substring(1,valueText.Length-2));
                 case ValueType.Integer:
-                    return new Value.Value(int.Parse(valueText));
+                    return new Value.IntValue(int.Parse(valueText));
                 case ValueType.Floating:
-                    return new Value.Value(float.Parse(valueText, CultureInfo.InvariantCulture));
+                    return new Value.FloatValue(float.Parse(valueText, CultureInfo.InvariantCulture));
                 case ValueType.Boolean:
-                    return new Value.Value(bool.Parse(valueText));
+                    return new Value.BoolValue(bool.Parse(valueText));
                 case ValueType.Variable:
                     return VisitVariable(context.variable());
             }

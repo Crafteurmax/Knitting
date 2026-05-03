@@ -21,7 +21,7 @@ namespace Runtime.ANTLR.Expression
             Value.Value left = leftExpression.Evaluate(story, storyNode);
             Value.Value right = rightExpression.Evaluate(story, storyNode);
 
-            return new Value.Value(left.CompareTo(right) == 0);
+            return new Value.BoolValue(left.CompareTo(right) == 0);
         }
 
         public override string ToString()

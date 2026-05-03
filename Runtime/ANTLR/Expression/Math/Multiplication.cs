@@ -27,18 +27,18 @@ namespace Runtime.ANTLR.Expression
             if(left.valueType == ValueType.Boolean && right.valueType == ValueType.Boolean) throw new NotImplementedException(); //TODO
             
             // Trivial elements
-            if(left.valueType == ValueType.Integer && right.valueType == ValueType.Integer) return new Value.Value(left.intValue * right.intValue);
+            if(left.valueType == ValueType.Integer && right.valueType == ValueType.Integer) return new Value.IntValue((int) left * (int) right);
             
-            if(left.valueType ==  ValueType.Floating || right.valueType == ValueType.Floating) return new Value.Value((float) left * (float) right);
+            if(left.valueType ==  ValueType.Floating || right.valueType == ValueType.Floating) return new Value.FloatValue((float) left * (float) right);
             
             if(left.valueType == ValueType.Boolean && right.valueType == ValueType.Integer) 
             {
-                return new Value.Value(left *  right.intValue);
+                return new Value.IntValue(left *  (int)right);
             }
             
             if(right.valueType == ValueType.Boolean && left.valueType == ValueType.Integer)
             {
-                return new Value.Value(left.intValue *  right);
+                return new Value.IntValue((int)left *  right);
             }
             
             throw new NotImplementedException();
